@@ -1,9 +1,13 @@
 import requests
 import time
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def send_clashmail(student_data, professor):
     # Deployment URL of the Google Apps Script Web App
-    deployment_url = 'https://script.google.com/macros/s/AKfycbxK6BCSTHbgrQhixbw2PaLUYskRekV5h7sBV_B29pbCL7Y0BERWR5rWP2GzWGwoCt50zw/exec'
+    deployment_url = os.getenv('APPSCRIPT_DEP_URL')
 
     professor_email = 'rohithraichu@gmail.com'
 
