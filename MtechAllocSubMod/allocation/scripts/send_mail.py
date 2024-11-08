@@ -3,7 +3,7 @@ import time
 
 def send_clashmail(student_data, professor):
     # Deployment URL of the Google Apps Script Web App
-    deployment_url = 'https://script.google.com/macros/s/AKfycbygADflnZSAYeCUTAfrJYO_fZdgC0O1GdIacJZNFkikAtFLloPqFtaMrkQdYhtreyjtoA/exec'
+    deployment_url = 'https://script.google.com/macros/s/AKfycbxK6BCSTHbgrQhixbw2PaLUYskRekV5h7sBV_B29pbCL7Y0BERWR5rWP2GzWGwoCt50zw/exec'
 
     professor_email = 'rohithraichu@gmail.com'
 
@@ -20,15 +20,20 @@ def send_clashmail(student_data, professor):
     print("Form Creation Response -> ", response.text)  # This will print the form URL
 
     # Send GET request to retrieve the selected student
+    start_time = time.time()
+    hello_count = 0
     while True:
         time.sleep(1)
         print("buffer")
 
         # Check if 10 seconds have passed
         if time.time() - start_time >= 10 and hello_count < 2:
-            print("hello")
+            reponse = requests.post(deployment_url, json={'action': 'sendReminder'})
+            print(reponse.text)
             hello_count += 1
             start_time = time.time()  # Reset the timer
+            if hello_count == 2:
+                print("Max number of reminders have been sent!")
 
         payload = {'action': 'getFormResponse'}
         response = requests.post(deployment_url, json=payload)
